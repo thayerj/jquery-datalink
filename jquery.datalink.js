@@ -104,11 +104,11 @@ function getMapping(ev, changed, newvalue, map) {
 	if ( !map ) {
 		mappedName = name;
 	} else {
-		var m = map[ name ];
+		var m = !(name in map) && "*" in map ? map["*"] : map[ name ];
 		if ( !m ) {
 			return null;
 		}
-		mappedName = m.name;
+		mappedName = m.name !== "*" ? m.name : name;
 		convert = m.convert;
 		if ( typeof convert === "string" ) {
 			convert = $.convertFn[ convert ];
@@ -176,29 +176,34 @@ $.extend($.fn, {
 				
 			};
 		if ( mapping ) {
-			$.each(mapping, function(n, v) {
-				var name = v,
-					convert,
-					convertBack,
-					twoWay;
+		   var reserved = {convert:1, convertBack:1, twoWay:1}; 
+           $.each(mapping, function(n, v) {
+				var kw = {};
+                kw.name = v;
 				if ( $.isPlainObject( v ) ) {
-					name = v.name || n;
-					convert = v.convert;
-					convertBack = v.convertBack;
-					twoWay = v.twoWay !== false;
-					hasTwoWay |= twoWay;
-				} else {
-					hasTwoWay = twoWay = true;
+					kw.name = v.name || n;
+					kw.convert = v.convert;
+					kw.convertBack = v.convertBack;
+					kw.twoWay = v.twoWay !== false;
+					hasTwoWay |= kw.twoWay;
+				} else if ($.type(n)==="string" && n in reserved){
+                   kw[n] = v;
+                   kw.name = "*";
+                   n = "*";
+                } else {	
+                  hasTwoWay = kw.twoWay = true;
 				}
-				if ( twoWay ) {
+				if ( kw.twoWay ) {
 					mapRev = mapRev || {};
 					mapRev[ n ] = {
-						name: name,
-						convert: convertBack
+						name: kw.name,
+						convert: kw.convertBack
 					};
 				}
 				map = map || {};
-				map[ name ] = { name: n, convert: convert, twoWay: twoWay };
+			    delete kw["convertBack"];
+                map[ kw.name ] = map[ kw.name ] || {};
+				$.extend(map[ kw.name ], kw);
 			});
 		}
 
