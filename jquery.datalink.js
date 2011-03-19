@@ -177,9 +177,9 @@ $.extend($.fn, {
 			};
 		if ( mapping ) {
 		   var reserved = {convert:1, convertBack:1, twoWay:1}; 
-           $.each(mapping, function(n, v) {
+		   $.each(mapping, function(n, v) {
 				var kw = {};
-                kw.name = v;
+				kw.name = v;
 				if ( $.isPlainObject( v ) ) {
 					kw.name = v.name || n;
 					kw.convert = v.convert;
@@ -187,11 +187,11 @@ $.extend($.fn, {
 					kw.twoWay = v.twoWay !== false;
 					hasTwoWay |= kw.twoWay;
 				} else if ($.type(n)==="string" && n in reserved){
-                   kw[n] = v;
-                   kw.name = "*";
-                   n = "*";
-                } else {	
-                  hasTwoWay = kw.twoWay = true;
+					kw[n] = v;
+					kw.name = "*";
+					n = "*";
+				} else {	
+					hasTwoWay = kw.twoWay = true;
 				}
 				if ( kw.twoWay ) {
 					mapRev = mapRev || {};
@@ -201,8 +201,8 @@ $.extend($.fn, {
 					};
 				}
 				map = map || {};
-			    delete kw["convertBack"];
-                map[ kw.name ] = map[ kw.name ] || {};
+				delete kw["convertBack"];
+				map[ kw.name ] = map[ kw.name ] || {};
 				$.extend(map[ kw.name ], kw);
 			});
 		}
@@ -231,7 +231,7 @@ $.extend($.fn, {
 		this.each(function() {
 			var self = $(this),
 				links = getLinks( this ).s;
-			for (var i = links.length-1; i >= 0; i--) {                
+			for (var i = links.length-1; i >= 0; i--) {				   
 				var link = links[ i ];
 				if ( link.target === target ) {
 					// unbind the handlers
