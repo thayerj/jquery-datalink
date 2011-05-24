@@ -104,11 +104,11 @@ function getMapping(ev, changed, newvalue, map) {
 	if ( !map ) {
 		mappedName = name;
 	} else {
-		var m = !(name in map) && "*" in map ? map["*"] : map[ name ];
+		var m = !(name in map) && "__all" in map ? map["__all"] : map[ name ];
 		if ( !m ) {
 			return null;
 		}
-		mappedName = m.name !== "*" ? m.name : name;
+		mappedName = m.name !== "__all" ? m.name : name;
 		convert = m.convert;
 		if ( typeof convert === "string" ) {
 			convert = $.convertFn[ convert ];
@@ -176,7 +176,7 @@ $.extend($.fn, {
 				
 			};
 		if ( mapping ) {
-		   var reserved = {convert:1, convertBack:1, twoWay:1}; 
+		   var reserved = {__convert:1, __convertBack:1, __twoWay:1}; 
 		   $.each(mapping, function(n, v) {
 				var kw = {};
 				kw.name = v;
@@ -186,22 +186,23 @@ $.extend($.fn, {
 					kw.convertBack = v.convertBack;
 					kw.twoWay = v.twoWay !== false;
 					hasTwoWay |= kw.twoWay;
-				} else if ($.type(n)==="string" && n in reserved){
-					kw[n] = v;
-					kw.name = "*";
-					n = "*";
-				} else {	
+				} else if (n in reserved){
+					kw[n.substr(2)] = v;
+					kw.name = "__all";
+					n = "__all";
+				} else {
 					hasTwoWay = kw.twoWay = true;
 				}
-				if ( kw.twoWay ) {
+				if ( kw.convertBack ) {
 					mapRev = mapRev || {};
 					mapRev[ n ] = {
 						name: kw.name,
 						convert: kw.convertBack
 					};
+                    hasTwoWay = true;
+				    delete kw["convertBack"];
 				}
 				map = map || {};
-				delete kw["convertBack"];
 				map[ kw.name ] = map[ kw.name ] || {};
 				$.extend(map[ kw.name ], kw);
 			});
@@ -221,6 +222,12 @@ $.extend($.fn, {
 			if ( target.nodeType ) {
 				getLinks( target ).t.push( link );
 			}
+            // Make this work the way people think it works
+            // If you bind an object to a form, the form will
+            // be populated with the values in that object
+            if (hasTwoWay){
+                handlerRev({target:target, type:eventNameChangeField}, this.name||this.id, target[this.name || this.id]);
+            }
 		});
 		if ( hasTwoWay ) {
 			bind( target, $(target), handlerRev );
