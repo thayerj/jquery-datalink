@@ -55,8 +55,9 @@ test("One way link using mapping with non-existent attribute", 3, function(){
 
 test("One way link using default mapping", 4, function(){
     var model = {};
-    $("#inputa").link(model,{twoWay:false});
+    $("#inputa").link(model,{__twoWay:false});
     $("#inputa").val("5").change();
+    debugger;
     equals(model.a, "5", "Input linked to model.");
     $(model).setField("a", 7);
     equals(model.a, 7, "Model was changed.");
@@ -69,7 +70,7 @@ test("One way link using default mapping", 4, function(){
 
 test("One way link using default convert", 4, function(){
     var model = {};
-    $("#inputa").link(model,{convert:function(value){return parseInt(value)*2;}});
+    $("#inputa").link(model,{__convert:function(value){return parseInt(value)*2;}});
     $("#inputa").val("5").change();
     equals(model.a, 10, "Input linked to model.");
     $(model).setField("a", 7);
