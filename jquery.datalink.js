@@ -135,7 +135,7 @@ $.extend($.fn, {
 		if ( typeof target === "string" ) {
 			target = $( target, this.context || null )[ 0 ];
 		}
-		var hasTwoWay = !mapping,
+		var hasTwoWay = mapping === undefined ? true : !!mapping,
 			map,
 			mapRev,
 			handler = function(ev, changed, newvalue) {
@@ -185,21 +185,19 @@ $.extend($.fn, {
 					kw.convert = v.convert;
 					kw.convertBack = v.convertBack;
 					kw.twoWay = v.twoWay !== false;
-					hasTwoWay |= kw.twoWay;
 				} else if (n in reserved){
 					kw[n.substr(2)] = v;
 					kw.name = "__all";
 					n = "__all";
-				} else {
-					hasTwoWay = kw.twoWay = true;
-				}
-				if ( kw.convertBack ) {
+				} 
+				hasTwoWay = kw.twoWay !== undefined ? kw.twoWay : hasTwoWay;
+				// not efficient for __all types
+                if (kw.twoWay || kw.convertBack) {
 					mapRev = mapRev || {};
 					mapRev[ n ] = {
 						name: kw.name,
 						convert: kw.convertBack
 					};
-                    hasTwoWay = true;
 				    delete kw["convertBack"];
 				}
 				map = map || {};
