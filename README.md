@@ -59,10 +59,11 @@ For example, given the following code:
 ```javascript
 var model = {};
 $("input").link(model, 
-{__convert:function(value) {return value*2;}, 
-   filename:{
-      convert:function(value){return value.toLowerCase();
-   }
+{
+  __convert: function(value) {return value*2;}, 
+  filename: {
+      convert:function(value){return value.toLowerCase();}
+  }
 });
 ```
 
