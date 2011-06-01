@@ -122,7 +122,6 @@ Often times, it is necessary to modify the value as it flows from one side of a 
 
 The plugin comes with one converter named "!" which negates the value.
 
-
 ```javascript
 $().ready(function() {
 	var person = {};
@@ -149,8 +148,8 @@ $().ready(function() {
 ```
 ```html
 <form name="person">
-	&lt;label for="age">Age:&lt;/label>
-	&lt;input type="text" name="age" id="age" />
+	<label for="age">Age:</label>
+	<input type="text" name="age" id="age" />
 </form>
 ```
 
@@ -170,6 +169,7 @@ $("#name").val("7.5");
 alert(person.age); // 8
 ```
 
+**Canceling an update and customizing the update**
 
 Converter functions receive the value that came from the source, the source object, and the target object. If a converter does not return a value or it returns undefined, the update does not occur. This allows you to not only be able to convert the value as it is updated, but to customize how the value is assigned.
 
@@ -210,7 +210,40 @@ alert($("#rank").height()); // 24
 
 This example links the height of the element with id "rank" to the salesRank field of the product object. When the salesRank changes, so does the height of the element. Note in this case there is no linking in the opposite direction. Changing the height of the rank element will not update the product.salesRank field.
 
+**Selector-wide converter functions**
+As stated in the introduction, it is possible to apply selector-wide convert and convertBack functions. By using the keywords __convert and __convertBack at the highest level of the mapping object, it will apply the functions for all elements matching the selector. For example:" 
+```html
+<form>
+  <input name="inputa" type = "text"/>
+  <input name="inputb" type = "text"/>
+</form>
+```
 
+``javascript
+var model = { };
+$("input").link(product, {
+    __convertBack: function(value, source, target) {
+	return (value * 2);
+    }
+});
+
+$(product).setField("inputa", 12);
+alert($('input[name="inputa"]'); // 24
+```
+## One-way links
+By default all mappings are two-way, but it is possible to specify a link be only one-way. To specify this for all elements matching your selector:
+
+```javascript
+var model = {};
+$("input").link(model, false);
+// or if you need to specify other mapping attributes
+$("input").link(model, {
+    __twoWay:false,
+    __convert:function(value){return value*2;}}
+);
+```
+
+To do this attribute by attribute, see the documentation on the [jQuery site](http://api.jquery.com/category/plugins/data-link/")
 
 ## Updating immediately
 
