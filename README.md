@@ -58,7 +58,12 @@ For example, given the following code:
 
 ```javascript
 var model = {};
-$("input").link(model, {__convert:function(value) {return value*2;}, filename:{convert:function(value){return value.toLowerCase();}});
+$("input").link(model, 
+{__convert:function(value) {return value*2;}, 
+   filename:{
+      convert:function(value){return value.toLowerCase();
+   }
+});
 ```
 
 All inputs on the page would be linked to model through the multiplication converter excepte for an input the a name attribute of filename, which would use the the toLowerCase() converter. 
