@@ -16,6 +16,7 @@ Note: This plugin currently depends on jQuery version 1.4.3.<br/>
 
 # Introduction
 This is a fork of the official jQuery DataLink plugin. It has the following changes:
+
 *It is possible to apply convert and convertBack functions to more than one DOM element at a time.*
 
 ```javascript
@@ -38,6 +39,12 @@ $("input").link(model, _twoWay:false);
 
 * Values in the model will be pushed to DOM elements at link time.  
 
+```javascript
+var model = {a:76};
+
+$("input").link(model);
+// If the page contains an input with name (or failing that, id) equal to "a", it will now contain the value 76.
+```
 
 
  The term "data linking" is used here to mean "automatically linking the field of an object to another field of another object." That is to say, the two objects are "linked" to each other, where changing the value of one object (the 'source') automatically updates the value in the other object (the 'target').
