@@ -5,6 +5,7 @@
 Documentation for the _jQuery Data Link_ plugin can be found on the jQuery documentation site:
 [Documentation on jQuery site](http://api.jquery.com/category/plugins/data-link/")
 ==================================== WARNING ====================================
+
 **Breaking change:**
 In jQuery 1.5, the behavior of $(plainObject).data() has been modified. In order to work against all versions of jQuery including jQuery 1.5, 
 current builds of jquery-datalink have therefore been modified as follows:
