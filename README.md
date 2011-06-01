@@ -67,7 +67,7 @@ $("input").link(model,
 });
 ```
 
-All inputs on the page would be linked to model through the multiplication converter except for an input with the a name (or failing that, id) attribute attribute equal to "filename", which would use the the toLowerCase() converter.  However, this is not yet tested as there are quite a few combinations.
+All inputs on the page would be linked to model through the multiplication converter except for an input with the a name (or failing that, id) attribute attribute equal to "filename", which would use the the toLowerCase() converter.  However, this is not yet implemented because it conflicts with the idea that specifying specific attributes, like "filename" above, would cause only that mapping to actually be created.
 
 ## jQuery(..).link() API
 
@@ -211,6 +211,7 @@ alert($("#rank").height()); // 24
 This example links the height of the element with id "rank" to the salesRank field of the product object. When the salesRank changes, so does the height of the element. Note in this case there is no linking in the opposite direction. Changing the height of the rank element will not update the product.salesRank field.
 
 **Selector-wide converter functions**
+
 As stated in the introduction, it is possible to apply selector-wide convert and convertBack functions. By using the keywords __convert and __convertBack at the highest level of the mapping object, it will apply the functions for all elements matching the selector. For example:" 
 ```html
 <form>
