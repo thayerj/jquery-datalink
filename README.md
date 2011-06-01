@@ -16,15 +16,25 @@ Note: This plugin currently depends on jQuery version 1.4.3.<br/>
 
 # Introduction
 This is a fork of the official jQuery DataLink plugin. It has the following changes:
-* It is possible to apply convert and convertBack functions to more than one DOM element at a time.
+*It is possible to apply convert and convertBack functions to more than one DOM element at a time.*
 
 ```javascript
 var model = {};
 $("input").link(model, {__convert:function(val) { return val * 2;}});
-\\ all inputs on the page will have the function applied
+// all inputs will be linked to model through the specified function
 ```
-* It is possible to disable two way linking on more than one DOM element at a time.
 
+*It is possible to disable two way linking on more than one DOM element at a time.*
+
+```javascript
+var model = {};
+
+$("input").link(model, false);
+// OR
+$("input").link(model, _twoWay:false);
+// will create a one-way link from all elements to model
+// all inputs on the page will have the function applied
+```
 
 * Values in the model will be pushed to DOM elements at link time.  
 
