@@ -53,7 +53,7 @@ The reason for the first two changes are that for some work flows it is likely o
 * * * 
 **Note**
 
-The intention is for that mixing the previous name-level properties with these newer selector wide attributes should work well.
+The intention is for that mixing the previous name-level properties with these newer selector wide attributes should work.
 For example, given the following code:
 
 ```javascript
@@ -67,7 +67,23 @@ $("input").link(model,
 });
 ```
 
-All inputs on the page would be linked to model through the multiplication converter except for an input with the a name (or failing that, id) attribute attribute equal to "filename", which would use the the toLowerCase() converter.  However, this is not yet implemented because it conflicts with the idea that specifying specific attributes, like "filename" above, would cause only that mapping to actually be created.
+All inputs on the page would be linked to model through the multiplication converter except for an input with a name (or failing that, id) attribute equal to "filename", which would use the the toLowerCase converter.  However, this is not yet implemented because it conflicts with the idea that specifying specific attributes, like "filename" above, would cause only that mapping to actually be created. Solutions:
+1. The presence of selector wide keywords on the mapping object would imply that all elements matching the selector are to be bound, and any specific attribute named mappings would simply take precedence.
+2. Specific attribute mappings would still imply that only those elements are to be mapped, and selector wide elements would simply provide additional functionality for those mappings. For example, you could specify a few attributes with name mappings, and have a selector wide __convert function that just applied to all those mappings:
+
+```javascript
+var person = {};
+$("form").link(person, {
+	firstName: {
+           name:"first-name",
+           twoWay:false
+        },
+	lastName: "last-name",
+        __convert: function(value){return value.toUpperCase();}
+});
+```
+This would imply that firstName is mapped one way to person["first-name"], lastName is two-way mapped to person["last-name"], and both mappings go through the UpperCase convert function.
+4. Simply not allow mixing of the mapping styles.
 
 ## jQuery(..).link() API
 
@@ -212,7 +228,8 @@ This example links the height of the element with id "rank" to the salesRank fie
 
 **Selector-wide converter functions**
 
-As stated in the introduction, it is possible to apply selector-wide convert and convertBack functions. By using the keywords __convert and __convertBack at the highest level of the mapping object, it will apply the functions for all elements matching the selector. For example:" 
+As stated in the introduction, it is possible to apply selector-wide convert and convertBack functions. By using the keywords __convert and __convertBack at the highest level of the mapping object, it will apply the functions for all elements matching the selector. For example:
+
 ```html
 <form>
   <input name="inputa" type = "text"/>
