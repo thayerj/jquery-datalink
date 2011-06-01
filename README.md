@@ -86,7 +86,7 @@ $("form").link(person, {
 ```
 This would imply that firstName is mapped one way to person["first-name"], lastName is two-way mapped to person["last-name"], and both mappings go through the UpperCase convert function.
 
-4. Simply not allow mixing of the mapping styles.
+3. Simply not allow mixing of the mapping styles.
 
 ## jQuery(..).link() API
 
