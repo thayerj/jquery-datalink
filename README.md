@@ -1,4 +1,4 @@
-# jQuery Data Link plugin branched
+# jQuery Data Link plugin forked
 
 *Note: This plugin is currently in beta form and may change significantly before version 1.0 is released. See tagged versions for stable Beta releases. Requires jquery version 1.4.2.*
 
@@ -14,9 +14,22 @@ Note: This plugin currently depends on jQuery version 1.4.3.<br/>
 
 
 
-<h1>Introduction</h1>
-<p>
-This is the official jQuery DataLink plugin. The term "data linking" is used here to mean "automatically linking the field of an object to another field of another object." That is to say, the two objects are "linked" to each other, where changing the value of one object (the 'source') automatically updates the value in the other object (the 'target').
+# Introduction
+This is a fork of the official jQuery DataLink plugin. It has the following changes:
+* It is possible to apply convert and convertBack functions to more than one DOM element at a time.
+```javascript
+var model = {};
+$("input").link(model, {__convert:function(val) { return val * 2;}});
+\\ all inputs on the page will have the function applied
+```
+* It is possible to disable two way linking on more than one DOM element at a time.
+
+
+* Values in the model will be pushed to DOM elements at link time.  
+
+
+
+ The term "data linking" is used here to mean "automatically linking the field of an object to another field of another object." That is to say, the two objects are "linked" to each other, where changing the value of one object (the 'source') automatically updates the value in the other object (the 'target').
 </p>
 
 <h2>jQuery(..).link() API</h2>
