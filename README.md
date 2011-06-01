@@ -67,17 +67,13 @@ $("input").link(model,
 });
 ```
 
-All inputs on the page would be linked to model through the multiplication converter excepte for an input the a name attribute of filename, which would use the the toLowerCase() converter. 
-However, this is not yet tested.
+All inputs on the page would be linked to model through the multiplication converter except for an input with the a name (or failing that, id) attribute attribute equal to "filename", which would use the the toLowerCase() converter.  However, this is not yet tested.
 
-<h2>jQuery(..).link() API</h2>
+## jQuery(..).link() API
 
-<p>
 The link API allows you to very quickly and easily link fields of a form to an object. Any changes to the form fields are automatically pushed onto the object, saving you from writing retrieval code. By default, changes to the object are also automatically pushed back onto the corresponding form field, saving you from writing even more code. Furthermore, converters lets you modify the format or type of the value as it flows between the two sides (for example, formatting a phone number, or parsing a string to a number).
-</p>
 
-<pre>
-&lt;script>
+```javascript
 $().ready(function() {
 	var person = {};
 	$("form").link(person);
@@ -94,13 +90,14 @@ $().ready(function() {
 		alert(person.name); 
 	});	
 });
-&lt;/script>
-
-&lt;form name="person">
+```
+```html
+<form name="person">
 	&lt;label for="name">Name:&lt;/label>
 	&lt;input type="text" name="name" id="name" />
-&lt;/form>
-</pre>
+</form>
+```
+
 
 <p>
 The jQuery selector serves as a container for the link. Any change events received by that container are processed. So linking with $("form") for example would hookup all input elements. You may also target a specific element, such as with $("#name").link(..).
