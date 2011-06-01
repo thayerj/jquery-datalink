@@ -67,11 +67,14 @@ $("input").link(model,
 });
 ```
 
-All inputs on the page would be linked to model through the multiplication converter except for an input with a name (or failing that, id) attribute equal to "filename", which would use the the toLowerCase converter.  However, this is not yet implemented because it conflicts with the idea that specifying specific attributes, like "filename" above, would cause only that mapping to actually be created. Solutions:
+All inputs on the page would be linked to model through the multiplication converter except for an input with a name (or failing that, id) attribute equal to "filename", which would use the the toLowerCase converter.  However, this is not yet implemented because it conflicts with the idea that specifying specific attributes, like "filename" above, would cause only that mapping to actually be created. 
+Possible solutions:
 
-1. The presence of selector wide keywords on the mapping object would imply that all elements matching the selector are to be bound, and any specific attribute named mappings would simply take precedence.
+1. Simply not allow mixing of the two mapping styles.
 
-2. Specific attribute mappings would still imply that only those elements are to be mapped, and selector wide elements would simply provide additional functionality for those mappings. For example, you could specify a few attributes with name mappings, and have a selector wide __convert function that just applied to all those mappings:
+2. The presence of selector wide keywords on the mapping object would imply that all elements matching the selector are to be bound, and any specific attribute named mappings would simply take precedence.
+
+3. Specific attribute mappings would still imply that only those elements are to be mapped, and selector wide elements would simply provide additional functionality for those mappings. For example, you could specify a few attributes with name mappings, and have a selector wide __convert function that just applied to all those mappings:
 
 ```javascript
 var person = {};
@@ -85,8 +88,6 @@ $("form").link(person, {
 });
 ```
 This would imply that firstName is mapped one way to person["first-name"], lastName is two-way mapped to person["last-name"], and both mappings go through the UpperCase convert function.
-
-3. Simply not allow mixing of the mapping styles.
 
 ## jQuery(..).link() API
 
