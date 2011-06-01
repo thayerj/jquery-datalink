@@ -15,6 +15,9 @@ Note: This plugin currently depends on jQuery version 1.4.3.<br/>
 
 
 # Introduction
+
+The term "data linking" is used here to mean "automatically linking the field of an object to another field of another object." That is to say, the two objects are "linked" to each other, where changing the value of one object (the 'source') automatically updates the value in the other object (the 'target').
+
 This is a fork of the official jQuery DataLink plugin. It has the following changes:
 
 * It is possible to apply convert and convertBack functions to more than one DOM element at a time.
@@ -46,9 +49,19 @@ $("input").link(model);
 // If the page contains an input with name (or failing that, id) equal to "a", it will now contain the value 76.
 ```
 
+The reason for the first two changes are that for some work flows it is likely one would want to apply this functionality across more than one element at a time rather than having to specify every element's name. The reason for the last change is that it seems to be a safe assumption that someone linking a pre-populated object to DOM elements intends for those values to be pushed to the DOM elements.
 
- The term "data linking" is used here to mean "automatically linking the field of an object to another field of another object." That is to say, the two objects are "linked" to each other, where changing the value of one object (the 'source') automatically updates the value in the other object (the 'target').
-</p>
+*Note*
+The intention is for that mixing the previous name-level properties with these newer selector wide attributes should work well.
+For example, given the following code:
+
+```javascript
+var model = {};
+$("input").link(model, {__convert:function(value) {return value*2;}, filename:{convert:function(value){return value.toLowerCase();}});
+```
+
+All inputs on the page would be linked to model through the multiplication converter excepte for an input the a name attribute of filename, which would use the the toLowerCase() converter. 
+However, this is not yet tested.
 
 <h2>jQuery(..).link() API</h2>
 
