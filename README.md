@@ -17,6 +17,7 @@ Note: This plugin currently depends on jQuery version 1.4.3.<br/>
 # Introduction
 This is a fork of the official jQuery DataLink plugin. It has the following changes:
 * It is possible to apply convert and convertBack functions to more than one DOM element at a time.
+
 ```javascript
 var model = {};
 $("input").link(model, {__convert:function(val) { return val * 2;}});
