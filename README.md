@@ -50,8 +50,9 @@ $("input").link(model);
 ```
 
 The reason for the first two changes are that for some work flows it is likely one would want to apply this functionality across more than one element at a time rather than having to specify every element's name. The reason for the last change is that it seems to be a safe assumption that someone linking a pre-populated object to DOM elements intends for those values to be pushed to the DOM elements.
+* * * 
+**Note**
 
-*Note*
 The intention is for that mixing the previous name-level properties with these newer selector wide attributes should work well.
 For example, given the following code:
 
