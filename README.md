@@ -87,7 +87,7 @@ $("form").link(person, {
         __convert: function(value){return value.toUpperCase();}
 });
 ```
-This would imply that firstName is mapped one way to person["first-name"], lastName is two-way mapped to person["last-name"], and both mappings go through the UpperCase convert function.
+This would imply that first-name is mapped one way to person.firstName, last-name is two-way mapped to person.lastName, and both mappings go through the UpperCase convert function.
 
 ## jQuery(..).link() API
 
