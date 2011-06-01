@@ -102,7 +102,7 @@ The jQuery selector serves as a container for the link. Any change events receiv
 ```javascript
 $("#name").link(..)
 ```
-## Customizing the Mapping<
+## Customizing the Mapping
 
 It is not always that case that the field of an object and the name of a form input are the same. You might want the "first-name" input to set the obj.firstName field, for example. Or you may only want specific fields mapped rather than all inputs.
 
@@ -115,8 +115,6 @@ $("form").link(person, {
 ```
 
 This links only the input with name "first-name" to obj.firstName, and the input with name "last-name" to obj.lastName.
-
-
 
 ## Converters and jQuery.convertFn
 
@@ -235,7 +233,7 @@ $(source)
 alert($("[name=age]").val()); // 25
 ```
 
-## jQuery(..).unlink() API<
+## jQuery(..).unlink() API
 This removes a link previously established with link.
 
 ```javascript
