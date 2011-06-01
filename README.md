@@ -18,7 +18,7 @@ Note: This plugin currently depends on jQuery version 1.4.3.<br/>
 
 The term "data linking" is used here to mean "automatically linking the field of an object to another field of another object." That is to say, the two objects are "linked" to each other, where changing the value of one object (the 'source') automatically updates the value in the other object (the 'target').
 
-This is a fork of the official jQuery DataLink plugin. It has the following changes:
+*This is a fork of the official jQuery DataLink plugin. It has the following changes:*
 
 * It is possible to apply convert and convertBack functions to more than one DOM element at a time.
 
@@ -51,7 +51,7 @@ $("input").link(model);
 
 The reason for the first two changes are that for some work flows it is likely one would want to apply this functionality across more than one element at a time rather than having to specify every element's name. The reason for the last change is that it seems to be a safe assumption that someone linking a pre-populated object to DOM elements intends for those values to be pushed to the DOM elements.
 * * * 
-**Note**
+**Note:**
 
 The intention is for that mixing the previous name-level properties with these newer selector wide attributes should work.
 For example, given the following code:
@@ -68,7 +68,9 @@ $("input").link(model,
 ```
 
 All inputs on the page would be linked to model through the multiplication converter except for an input with a name (or failing that, id) attribute equal to "filename", which would use the the toLowerCase converter.  However, this is not yet implemented because it conflicts with the idea that specifying specific attributes, like "filename" above, would cause only that mapping to actually be created. Solutions:
+
 1. The presence of selector wide keywords on the mapping object would imply that all elements matching the selector are to be bound, and any specific attribute named mappings would simply take precedence.
+
 2. Specific attribute mappings would still imply that only those elements are to be mapped, and selector wide elements would simply provide additional functionality for those mappings. For example, you could specify a few attributes with name mappings, and have a selector wide __convert function that just applied to all those mappings:
 
 ```javascript
@@ -83,6 +85,7 @@ $("form").link(person, {
 });
 ```
 This would imply that firstName is mapped one way to person["first-name"], lastName is two-way mapped to person["last-name"], and both mappings go through the UpperCase convert function.
+
 4. Simply not allow mixing of the mapping styles.
 
 ## jQuery(..).link() API
