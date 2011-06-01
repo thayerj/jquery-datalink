@@ -67,7 +67,7 @@ $("input").link(model,
 });
 ```
 
-All inputs on the page would be linked to model through the multiplication converter except for an input with the a name (or failing that, id) attribute attribute equal to "filename", which would use the the toLowerCase() converter.  However, this is not yet tested.
+All inputs on the page would be linked to model through the multiplication converter except for an input with the a name (or failing that, id) attribute attribute equal to "filename", which would use the the toLowerCase() converter.  However, this is not yet tested as there are quite a few combinations.
 
 ## jQuery(..).link() API
 
@@ -97,39 +97,35 @@ $().ready(function() {
 	&lt;input type="text" name="name" id="name" />
 </form>
 ```
+The jQuery selector serves as a container for the link. Any change events received by that container are processed. So linking with $("form") for example would hookup all input elements. You may also target a specific element, such as with 
 
+```javascript
+$("#name").link(..)
+```
+## Customizing the Mapping<
 
-<p>
-The jQuery selector serves as a container for the link. Any change events received by that container are processed. So linking with $("form") for example would hookup all input elements. You may also target a specific element, such as with $("#name").link(..).
-
-<h2>Customizing the Mapping</h2>
-
-<p>
 It is not always that case that the field of an object and the name of a form input are the same. You might want the "first-name" input to set the obj.firstName field, for example. Or you may only want specific fields mapped rather than all inputs.
-</p>
-<pre>
+
+```javascript
 var person = {};
 $("form").link(person, {
 	firstName: "first-name",
 	lastName: "last-name",
 });
-</pre>
-<p>
+```
+
 This links only the input with name "first-name" to obj.firstName, and the input with name "last-name" to obj.lastName.
-</p>
 
 
-<h2>Converters and jQuery.convertFn</h2>
 
-<p>
+## Converters and jQuery.convertFn
+
 Often times, it is necessary to modify the value as it flows from one side of a link to the other. For example, to convert null to "None", to format or parse a date, or parse a string to a number. The link APIs support specifying a converter function, either as a name of a function defined on jQuery.convertFn, or as a function itself.
-</p>
-<p>
-The plugin comes with one converter named "!" which negates the value.
-</p>
 
-<pre>
-&lt;script>
+The plugin comes with one converter named "!" which negates the value.
+
+
+```javascript
 $().ready(function() {
 	var person = {};
 
@@ -152,19 +148,17 @@ $().ready(function() {
 		alert(person.age);
 	});
 });
-&lt;/script>
-
-&lt;form name="person">
+```
+```html
+<form name="person">
 	&lt;label for="age">Age:&lt;/label>
 	&lt;input type="text" name="age" id="age" />
-&lt;/form>
-</pre>
+</form>
+```
 
-<p>
 It is convenient to reuse converters by naming them this way. But you may also specify the converter directly as a function.
-</p>
 
-<pre>
+```javascript
 var person = {};
 $("#age").link(person, {
 	age: {
@@ -176,12 +170,12 @@ $("#age").link(person, {
 
 $("#name").val("7.5");
 alert(person.age); // 8
-</pre>
+```
 
-<p>
+
 Converter functions receive the value that came from the source, the source object, and the target object. If a converter does not return a value or it returns undefined, the update does not occur. This allows you to not only be able to convert the value as it is updated, but to customize how the value is assigned.
-</p>
-<pre>
+
+```javascript
 var person = {};
 $("#age").link(person, {
 	age: {
@@ -197,14 +191,13 @@ alert(person.age); // 8
 alert(person.canVote); // false
 $("#name").val("18");
 alert(person.canVote); // true
-</pre>
-<p>
+```
+
 In this example, the converter sets two fields on the target, and neglects to return a value to cancel the default operation of setting the age field. 
-</p>
-<p>
+
 Converters can also be specified for the reverse process of updating the source from a change to the target. You can use this to customize the attribute used to represent the value, rather than the default of setting the 'value'.
-</p>
-<pre>
+
+```javascript
 var product = { };
 $("#rank").link(product, {
 	salesRank: {
@@ -215,18 +208,18 @@ $("#rank").link(product, {
 });
 $(product).setField("salesRank", 12);
 alert($("#rank").height()); // 24
-</pre>
-<p>
+```
+
 This example links the height of the element with id "rank" to the salesRank field of the product object. When the salesRank changes, so does the height of the element. Note in this case there is no linking in the opposite direction. Changing the height of the rank element will not update the product.salesRank field.
-</p>
 
 
-<h2>Updating immediately</h2>
-<p>
-Sometimes it is desired that the target of a link reflect the source value immediately, even before the source is changed. Currently there is no built-in API for this, but you can force by triggering a change event.
-</p>
 
-<pre>
+## Updating immediately
+
+Sometimes it is desired that the target of a link reflect the source value immediately, even before the source is changed. In the direction of DOM element to model (JavaScript object) a change event must explicitly be triggered. For the other direction, from model to DOM element, the update happens automatically at link-time.
+
+```javascript
+var target = {};
 $(source)
 	.link(target)
 	.trigger("change");
@@ -234,35 +227,31 @@ $(source)
 alert(target.input1); // value
 
 // or in reverse
+target = {age:25};
+
 $(source)
 	.link(target);
 
-$(target)
-	.trigger("changeField");
+alert($("[name=age]").val()); // 25
+```
 
-alert($("[name=age]").val()); // target.age
-</pre>
-
-<h2>jQuery(..).unlink() API</h2>
-<p>
+## jQuery(..).unlink() API<
 This removes a link previously established with link.
-</p>
 
-<pre>
+```javascript
 $(source)
 	.link(target) // create link
 	.unlink(target); // cancel link
-</pre>
+```
 
-<strong>Automatic unlinking</strong><br/>
+**Automatic unlinking**
 
-<p>
 Links are cleaned up when its target or source is a DOM element that is being destroyed. For example, the following setups a link between an input and a span, then destroys the span by clearing it's parent html. The link is automatically removed.
-</p>
 
-<pre>
+
+```javascript
 $("#input1").link("#span1", {
 	text: "input1"
 });
 $("#span1").parent().html("");
-</pre>
+```
