@@ -4,7 +4,6 @@
 
 Documentation for the _jQuery Data Link_ plugin can be found on the jQuery documentation site:
 [Documentation on jQuery site](http://api.jquery.com/category/plugins/data-link/")
-<p>
 ==================================== WARNING ====================================
 **Breaking change:**
 In jQuery 1.5, the behavior of $(plainObject).data() has been modified. In order to work against all versions of jQuery including jQuery 1.5, 
@@ -14,8 +13,7 @@ current builds of jquery-datalink have therefore been modified as follows:
 *The events associated with the modified field are now "setField" and "changeField", rather than "setData" and changeData".
 Note: This plugin currently depends on jQuery version 1.4.3.<br/>
 =================================================================================
-</p>
-</p>
+
 
 
 <h1>Introduction</h1>
