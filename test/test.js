@@ -261,3 +261,10 @@ test("Two way link by default with a pre-populated object and convertBack define
 
 // TODO, look at mixing explicity mappings and default mappings as the backup
 // TODO test explicit name mapping
+//test("Verify old plugin had same behavior for two-way bindings", 1, function(){
+//    var model = {};
+//    $("#inputa").link(model,{a:{convertBack:function(value){return value*2;}}});
+//    $("#inputa").val(12).change();
+//    equals($("#inputa").val(), "24", "Two events fired.");
+//    
+//});
